@@ -1,0 +1,60 @@
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+    "email": "test24@mail.com",
+    "password":"C1Mot2Passe!"
+}
+
+### PUT
+
+PUT http://localhost:3000/auth/029dcdf3-7368-455b-950b-4563eeef4f0f
+Content-Type: application/json
+
+{
+    "role":"ADMIN"
+}
+
+### GET BOOKS
+
+GET http://localhost:3000/library/
+
+### GET BY ID
+GET http://localhost:3000/auth/07290217-31cc-451d-a4c5-cd5e09f103aa
+
+### DELETE BY ID
+
+DELETE http://localhost:3000/auth/07290217-31cc-451d-a4c5-cd5e09f103aa
+
+### CREATE BOOK
+
+POST http://localhost:3000/library/new
+Content-Type: application/json
+
+{
+    "ISBN":"123054612",
+    "title":"Blood Song",
+    "author":"Anthony Ryan",
+    "editor":"NotKnown",
+    "publication_year":2014,
+    "total_amount":2
+}
+
+
+### UPDATE BOOK
+PUT http://localhost:3000/library/b091262f-59e4-42b1-b247-ea3c4750bb4b
+Content-Type: application/json
+
+{
+    "editor":"Ace Books",
+    "publication_year":2012
+}
+
+### BORROW
+
+POST http://localhost:3000/borrow
+Content-Type: application/json
+
+{
+    "book": "b091262f-59e4-42b1-b247-ea3c4750bb4b"
+}

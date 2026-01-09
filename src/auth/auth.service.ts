@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { LoginUserDto } from 'src/user/dto/login-user.dto';
 import { UserService } from 'src/user/user.service';
@@ -28,6 +28,10 @@ export class AuthService {
         }
         if (!user.password || !(await verifyPassword(loginUserDto.password, user.password))) {
             throw new BadRequestException("Bad user/password combination")
+        }
+
+        if (!user.whiteliststatus) {
+            throw new ForbiddenException();
         }
 
         return user;

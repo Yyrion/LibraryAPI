@@ -19,7 +19,7 @@ export class UserService {
       lastname: lastname,
       creation_date: new Date(),
       modification_date: new Date(),
-      whiteliststatus: true
+      whiteliststatus: false
     }
 
     const user = this.repo.create(newData)
@@ -42,8 +42,18 @@ export class UserService {
 
     newData.modification_date = new Date();
 
+    if (user.role === 'ADMIN') {
+      newData.whiteliststatus = true;
+    }
+
     Object.assign(user, newData)
     return this.repo.save(user);
+  }
+
+  async findAll() {
+    const users = await this.repo.find();
+
+    return users;
   }
 
   async findOne(id: string) {

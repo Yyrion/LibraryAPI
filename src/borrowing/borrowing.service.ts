@@ -14,6 +14,13 @@ export class BorrowingService {
   async create(createBorrowingDto: CreateBorrowingDto, userId: string) {
 
     const book = await this.bookService.findOne(createBorrowingDto.bookId);
+
+    if (book.available_amount <= 0) {
+      throw new NotFoundException()
+    } else {
+      await this.bookService.borrow(book.id);
+    }
+    
     const user = await this.userService.findOne(userId);
 
     if (!book || !user) {

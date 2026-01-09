@@ -1,35 +1,69 @@
+// Connexion Administrateur
+// "email": "administrateur@mail.com",
+// "password":"Mot2Passe!",
+//
+// Connexion Libraire
+// "email": "librarian@mail.com"
+// "password":"Mot2Passe!"
+//
+// Connexion Normale
+// "email": "test@mail.com"
+// "password":"Mot2Passe!"
+
+//---------------------------------------------------
+// UTILISATEUR
+//---------------------------------------------------
+
+### CREATION DE COMPTE
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+    "email": "",
+    "password":"",
+    "surname":"",
+    "lastname":""
+}
+
+### CONNEXION
 POST http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
-    "email": "ewen@mail.com",
-    "password":"C1Mot2Passe!",
-    "surname":"Ewen",
-    "lastname":"Rondin"
+    "email": "administrateur@mail.com",
+    "password":"Mot2Passe!"
 }
 
-### PUT
+### INFORMATIONS PERSONELLES
+GET http://localhost:3000/auth/me
 
-PUT http://localhost:3000/auth/c7a868fb-596c-46c3-ad89-7c06837023b0
+### MODIFICATION COMPTE ( Admin )
+PUT http://localhost:3000/auth/9e3258f8-8f99-47f1-91e7-9dd1b002ecd5
 Content-Type: application/json
-
 {
-    "role":"ADMIN"
+    "role":"STUDENT",
+    "whiteliststatus":true
 }
+
+
+//---------------------------------------------------
+// GESTION LIVRE
+//---------------------------------------------------
+
 
 ### GET BOOKS
+GET http://localhost:3000/library
 
-GET http://localhost:3000/library/
 
 ### GET BY ID
-GET http://localhost:3000/auth/07290217-31cc-451d-a4c5-cd5e09f103aa
+GET http://localhost:3000/library/b091262f-59e4-42b1-b247-ea3c4750bb4b
 
-### DELETE BY ID
 
-DELETE http://localhost:3000/auth/07290217-31cc-451d-a4c5-cd5e09f103aa
+### DELETE BY ID (Libraire)
+DELETE http://localhost:3000/library/b091262f-59e4-42b1-b247-ea3c4750bb4b
 
-### CREATE BOOK
 
+### CREATE BOOK (Libraire)
 POST http://localhost:3000/library/new
 Content-Type: application/json
 
@@ -43,7 +77,7 @@ Content-Type: application/json
 }
 
 
-### UPDATE BOOK
+### UPDATE BOOK (Libraire)
 PUT http://localhost:3000/library/b091262f-59e4-42b1-b247-ea3c4750bb4b
 Content-Type: application/json
 
@@ -52,11 +86,35 @@ Content-Type: application/json
     "publication_year":2012
 }
 
-### BORROW
 
+//---------------------------------------------------
+// GESTION EMPRUNTS ( Utilisateurs connectés )
+//---------------------------------------------------
+
+
+### BORROW
 POST http://localhost:3000/borrow
 Content-Type: application/json
 
 {
     "book": "b091262f-59e4-42b1-b247-ea3c4750bb4b"
 }
+
+
+### LIST BORROW (Libraire)
+GET http://localhost:3000/borrow
+
+### INFORMATIONS BORROW (Libraire)
+GET http://localhost:3000/borrow/f032b3a5-5263-4b0a-9abe-2f2f553428b8
+
+
+### UPDATE BORROW (Libraire)
+PUT http://localhost:3000/borrow/f032b3a5-5263-4b0a-9abe-2f2f553428b8
+Content-Type: application/json
+
+{
+    "book": "b091262f-59e4-42b1-b247-ea3c4750bb4b"
+}
+
+### DELETE BORROW (Libraire)
+DELETE http://localhost:3000/borrow/f032b3a5-5263-4b0a-9abe-2f2f553428b8

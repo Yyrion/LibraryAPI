@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBookDto } from './dto/create-book.dto';
 import { Book } from './entities/book.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 
 @Injectable()
 export class BookService {
@@ -19,6 +19,12 @@ export class BookService {
       total_amount: createBookDto.total_amount
     })
     return this.repo.save(book);
+  }
+
+  async findAllAvailable() {
+    return this.repo.find({
+      where: { available_amount: MoreThan(0) }
+    });
   }
 
   async findAll() {
@@ -69,5 +75,14 @@ export class BookService {
     }
 
     return this.repo.remove(book);
+  }
+
+  async borrow(id: string) {
+    const book = await this.findOne(id);
+
+    const newData = {available_amount: book.available_amount - 1};
+
+    Object.assign(book, newData);
+    return this.repo.save(book);
   }
 }

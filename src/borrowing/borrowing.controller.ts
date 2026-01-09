@@ -1,9 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Session, ForbiddenException, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Session, ForbiddenException, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { BorrowingService } from './borrowing.service';
 import { CreateBorrowingDto } from './dto/create-borrowing.dto';
 import { UpdateBorrowingDto } from './dto/update-borrowing.dto';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { LibrarianGuard } from 'src/guards/librarian.guard';
 
 @Controller('borrow')
+@UseGuards(AuthGuard)
 export class BorrowingController {
   constructor(private readonly borrowingService: BorrowingService) {}
 
@@ -14,21 +17,25 @@ export class BorrowingController {
   }
 
   @Get()
+  @UseGuards(LibrarianGuard)
   findAll() {
     return this.borrowingService.findAll();
   }
 
   @Get(':id')
+  @UseGuards(LibrarianGuard)
   findOne(@Param('id') id: string) {
     return this.borrowingService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
+  @UseGuards(LibrarianGuard)
   update(@Param('id') id: string, @Body() updateBorrowingDto: UpdateBorrowingDto) {
     return this.borrowingService.update(id, updateBorrowingDto);
   }
 
   @Delete(':id')
+  @UseGuards(LibrarianGuard)
   remove(@Param('id') id: string) {
     return this.borrowingService.remove(id);
   }

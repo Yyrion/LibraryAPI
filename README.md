@@ -2,6 +2,12 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
+## Tests via requests.http
+
+- Ouvre [requests.http](requests.http) dans VS Code avec l'extension REST Client.
+- Les requêtes couvrent la plupart des scénarios de test et sont déjà prêtes : sélectionne une requête puis clique "Send Request" pour l'exécuter.
+- Vérifie que l'API tourne (`npm run start:dev`) avant d'envoyer les requêtes.
+
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
@@ -24,6 +30,37 @@
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+
+## API endpoints
+
+| Method | Path | Description | Auth | Roles |
+| --- | --- | --- | --- | --- |
+| GET | / | Health/hello | None | - |
+| POST | /auth/signup | Create user, set session | None | - |
+| POST | /auth/signin | Login, set session | None | - |
+| POST | /auth/signout | Logout | Session | Any |
+| GET | /auth/me | Current user | Session | Any |
+| GET | /auth/:id | Get user by id | Session | Admin |
+| GET | /auth/list | List users | Session | Admin |
+| PUT | /auth/:id | Update user | Session | Admin |
+| DELETE | /auth/:id | Delete user | Session | Admin |
+| POST | /library/new | Create book | Session | Librarian |
+| GET | /library/available | List available books | Session | Any |
+| GET | /library/:id | Get book by id | Session | Any |
+| PUT | /library/:id | Update book | Session | Librarian |
+| DELETE | /library/:id | Delete book | Session | Librarian |
+| GET | /library | List books | Session | Any |
+| POST | /borrow | Create borrowing for current user | Session | Any |
+| GET | /borrow | List borrowings | Session | Librarian |
+| GET | /borrow/:id | Get borrowing by id | Session | Librarian |
+| PUT | /borrow/return/:id | Mark borrowing returned | Session | Librarian |
+| PUT | /borrow/:id | Update borrowing | Session | Librarian |
+| DELETE | /borrow/:id | Delete borrowing | Session | Librarian |
+| POST | /review | Create review | None | - |
+| GET | /review | List reviews | None | - |
+| GET | /review/:id | Get review by id | None | - |
+| PATCH | /review/:id | Update review | None | - |
+| DELETE | /review/:id | Delete review | None | - |
 
 ## Project setup
 

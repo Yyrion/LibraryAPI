@@ -14,11 +14,12 @@ export class BorrowingService {
   async create(createBorrowingDto: CreateBorrowingDto, userId: string) {
 
     const book = await this.bookService.findOne(createBorrowingDto.bookId);
+    console.log(book, createBorrowingDto)
 
     if (book.available_amount <= 0) {
       throw new NotFoundException()
     } else {
-      await this.bookService.borrow(book.id);
+      await this.bookService.borrow(book.id, -1);
     }
     
     const user = await this.userService.findOne(userId);
@@ -42,7 +43,8 @@ export class BorrowingService {
 
   async findOne(id: string) {
     const borrow = await this.repo.findOne({
-      where:{id:id}
+      where: { id: id },
+      relations: ['book', 'user'],
     })
 
     if (!borrow) throw new NotFoundException();
@@ -61,5 +63,15 @@ export class BorrowingService {
     const borrow = await this.findOne(id);
 
     return this.repo.remove(borrow);
+  }
+
+  async borrowReturned(id: string) {
+    const newData = {status: 'RETURNED', deadline_date: new Date()};
+
+    const borrow = await this.findOne(id);
+    await this.bookService.borrow(borrow.book.id, 1);
+
+    Object.assign(borrow, newData)
+    return this.repo.save(borrow);
   }
 }

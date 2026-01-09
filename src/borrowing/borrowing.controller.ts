@@ -28,6 +28,12 @@ export class BorrowingController {
     return this.borrowingService.findOne(id);
   }
 
+  @Put('/return/:id')
+  @UseGuards(LibrarianGuard)
+  returnBorrow(@Param('id') id: string) {
+    return this.borrowingService.borrowReturned(id);
+  }
+
   @Put(':id')
   @UseGuards(LibrarianGuard)
   update(@Param('id') id: string, @Body() updateBorrowingDto: UpdateBorrowingDto) {

@@ -34,6 +34,9 @@ Content-Type: application/json
     "password":"Mot2Passe!"
 }
 
+### DECONNEXION
+POST http://localhost:3000/auth/signout
+
 ### INFORMATIONS PERSONELLES
 GET http://localhost:3000/auth/me
 
@@ -68,22 +71,21 @@ POST http://localhost:3000/library/new
 Content-Type: application/json
 
 {
-    "ISBN":"123054612",
-    "title":"Blood Song",
-    "author":"Anthony Ryan",
+    "ISBN":"48945123589",
+    "title":"Percy Jackson : Le Calice des dieux",
+    "author":"Ricl Riordan",
     "editor":"NotKnown",
-    "publication_year":2014,
+    "publication_year":2025,
     "total_amount":2
 }
 
 
 ### UPDATE BOOK (Libraire)
-PUT http://localhost:3000/library/b091262f-59e4-42b1-b247-ea3c4750bb4b
+PUT http://localhost:3000/library/1ae8aebc-d0b5-46d7-84eb-ba28327ec811
 Content-Type: application/json
 
 {
-    "editor":"Ace Books",
-    "publication_year":2012
+    "author":"Rick Riordan"
 }
 
 
@@ -97,7 +99,7 @@ POST http://localhost:3000/borrow
 Content-Type: application/json
 
 {
-    "book": "b091262f-59e4-42b1-b247-ea3c4750bb4b"
+    "bookId": "aea37b5f-3e2f-4eb9-9f32-2049408c1c47"
 }
 
 
@@ -105,7 +107,7 @@ Content-Type: application/json
 GET http://localhost:3000/borrow
 
 ### INFORMATIONS BORROW (Libraire)
-GET http://localhost:3000/borrow/f032b3a5-5263-4b0a-9abe-2f2f553428b8
+GET http://localhost:3000/borrow/d6a9e861-9298-4a3d-8ea4-4b70431e6c16
 
 
 ### UPDATE BORROW (Libraire)
@@ -115,6 +117,12 @@ Content-Type: application/json
 {
     "book": "b091262f-59e4-42b1-b247-ea3c4750bb4b"
 }
+
+
+### RETURN A BOOK (Libraire)
+PUT http://localhost:3000/borrow/return/0db96bec-ac03-4bfa-8538-ceda9de8e0f4
+Content-Type: application/json
+
 
 ### DELETE BORROW (Libraire)
 DELETE http://localhost:3000/borrow/f032b3a5-5263-4b0a-9abe-2f2f553428b8

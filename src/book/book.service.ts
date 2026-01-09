@@ -77,10 +77,13 @@ export class BookService {
     return this.repo.remove(book);
   }
 
-  async borrow(id: string) {
+  async borrow(id: string, amount: number) {
     const book = await this.findOne(id);
+    let newAmount = book.available_amount + amount;
+    if (newAmount < 0) newAmount = 0;
+    else if (newAmount > book.total_amount) newAmount = book.total_amount;
 
-    const newData = {available_amount: book.available_amount - 1};
+    const newData = {available_amount: newAmount};
 
     Object.assign(book, newData);
     return this.repo.save(book);

@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Param, Delete, Session, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Session, Put, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthService } from 'src/auth/auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
+import { SerializeInterceptor } from './interceptor/serializeuser.interceptor';
 
 @Controller('auth')
 export class UserController {
@@ -15,6 +16,7 @@ export class UserController {
   }
 
   @Post('/signup')
+  @UseInterceptors(SerializeInterceptor)
   async signup(@Body() createUserDto: CreateUserDto, @Session() session: any) {
     const user = await this.authService.signup(createUserDto);
     session.userId = user.id;
@@ -22,6 +24,7 @@ export class UserController {
   }
 
   @Post('/signin')
+  @UseInterceptors(SerializeInterceptor)
   async signin(@Body() loginUserDto: LoginUserDto, @Session() session: any) {
     const user = await this.authService.signin(loginUserDto);
     session.userId = user.id;
@@ -30,22 +33,24 @@ export class UserController {
 
   @Post('/signout')
   async signout(@Session() session: any) {
-    console.log(session.userId)
     session.userId = null;
     return 'ok';
   }
 
   @Get(':id')
+  @UseInterceptors(SerializeInterceptor)
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
   }
 
   @Put(':id')
+  @UseInterceptors(SerializeInterceptor)
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')
+  @UseInterceptors(SerializeInterceptor)
   remove(@Param('id') id: string) {
     return this.userService.remove(id);
   }

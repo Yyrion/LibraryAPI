@@ -2,13 +2,15 @@ POST http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
-    "email": "test24@mail.com",
-    "password":"C1Mot2Passe!"
+    "email": "ewen@mail.com",
+    "password":"C1Mot2Passe!",
+    "surname":"Ewen",
+    "lastname":"Rondin"
 }
 
 ### PUT
 
-PUT http://localhost:3000/auth/029dcdf3-7368-455b-950b-4563eeef4f0f
+PUT http://localhost:3000/auth/c7a868fb-596c-46c3-ad89-7c06837023b0
 Content-Type: application/json
 
 {
